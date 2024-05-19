@@ -6,6 +6,7 @@ const { rateLimit } = require("express-rate-limit");
 const connectDb = require("./db");
 const taskRoutes = require("./routes/tasks");
 const userRoutes = require("./routes/users");
+const errorHandler = require("./middleware/errorHandler");
 
 dotenv.config();
 const port = process.env.PORT || 4000;
@@ -22,6 +23,8 @@ app.get("/health", (_, res) => res.send("ok"));
 
 app.use("/task", taskRoutes);
 app.use("/user", userRoutes);
+
+app.use(errorHandler);
 
 app.listen(port, () =>
   console.log(`server live on http://localhost:${port}, pid:${process.pid}`)
