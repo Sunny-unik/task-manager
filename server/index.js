@@ -4,6 +4,8 @@ const helmet = require("helmet");
 const dotenv = require("dotenv");
 const { rateLimit } = require("express-rate-limit");
 const connectDb = require("./db");
+const taskRoutes = require("./routes/tasks");
+const userRoutes = require("./routes/users");
 
 dotenv.config();
 const port = process.env.PORT || 4000;
@@ -17,6 +19,9 @@ connectDb();
 
 app.get("/", (_, res) => res.send("Hello World!"));
 app.get("/health", (_, res) => res.send("ok"));
+
+app.use("/task", taskRoutes);
+app.use("/user", userRoutes);
 
 app.listen(port, () =>
   console.log(`server live on http://localhost:${port}, pid:${process.pid}`)
