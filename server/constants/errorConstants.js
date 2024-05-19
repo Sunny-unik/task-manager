@@ -9,6 +9,8 @@ const errorConstants = {
   badRequest: () => errorConstantStructure(400, "Bad Request"),
   validationError: (errors) =>
     errorConstantStructure(403, "Invalid Data", errors),
+  duplicateValues: (fields) =>
+    errorConstantStructure(409, "Duplicate Data", fields),
   notFound: (entity = "Entity") =>
     errorConstantStructure(404, entity + " not found"),
   unauthorized: (login) =>

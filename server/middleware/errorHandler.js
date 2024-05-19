@@ -7,6 +7,10 @@ const errorHandler = (error, _req, res, _next) => {
     const response = errorConstants.validationError(messages);
     return res.status(response.code).json(response);
   }
+  if (error.code && error.code === 11000) {
+    const response = errorConstants.duplicateValues(error.keyPattern);
+    return res.status(response.code).json(response);
+  }
   const { code, message } = errorConstants.internalServerError();
   res.status(code).send({ message });
 };

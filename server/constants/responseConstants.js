@@ -1,5 +1,5 @@
 const responseConstantStructure = (data, message, success = "ok") => ({
-  data,
+  data: data,
   message,
   success,
 });
