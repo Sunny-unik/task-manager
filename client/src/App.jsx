@@ -4,6 +4,11 @@ import Header from "./components/Header";
 import { UserProvider } from "./UserContext";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import NotFound from "./components/NotFound";
+import Home from "./components/Home";
+import Profile from "./components/Profile";
+import AddTask from "./components/AddTask";
+import OpenTask from "./components/OpenTask";
 
 function App() {
   return (
@@ -12,24 +17,14 @@ function App() {
         <UserProvider>
           <Header />
           <Routes>
-            <Route
-              path="/"
-              element={
-                <h1 className="text-3xl font-bold max-w-7xl mx-auto">
-                  Hello world!
-                </h1>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <h1 className="text-3xl font-bold max-w-7xl mx-auto">
-                  Profile
-                </h1>
-              }
-            />
+            <Route path="/" Component={Home} />
+            <Route path="/profile" Component={Profile} />
+            <Route path="/task/new" Component={AddTask} />
+            <Route path="/task/edit/:id" Component={AddTask} />
+            <Route path="/task/:id" Component={OpenTask} />
             <Route path="/login" Component={Login} />
             <Route path="/register" Component={Register} />
+            <Route path="/*" Component={NotFound} />
           </Routes>
         </UserProvider>
       </Router>
