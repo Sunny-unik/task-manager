@@ -1,8 +1,43 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import FullPageLoader from "./FullPageLoading";
+import { useUser } from "../UserContext";
+import { useEffect } from "react";
 
 export default function Register() {
+  const { user, loading, signup } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    user && navigate("/");
+  }, [user, navigate]);
+
+  const validateData = ({ email, name, password }) => {
+    console.log({ email, name, password });
+    if (typeof name !== "string" || !name.trim().length)
+      return alert("Invalid Name");
+    if (typeof email !== "string" || !email.trim().length)
+      return alert("Invalid Email");
+    if (typeof password !== "string" || !password.trim().length)
+      return alert("Invalid Password");
+    if (password.length < 8) return alert("Password must be 8 character long");
+    return true;
+  };
+  const registerHandler = async ({ nativeEvent, target }) => {
+    nativeEvent.preventDefault();
+    const formData = new FormData(target);
+    const userData = {
+      email: formData.get("email"),
+      name: formData.get("name"),
+      password: formData.get("password"),
+    };
+    if (!validateData(userData)) return;
+    signup(userData);
+  };
+
   return (
     <>
+      {loading && <FullPageLoader />}
+
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -16,7 +51,7 @@ export default function Register() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={registerHandler}>
             <div>
               <label
                 htmlFor="email"

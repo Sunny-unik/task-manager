@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useUser } from "../UserContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -99,14 +100,9 @@ export default function Header() {
 }
 
 function TopMenuItems() {
-  const navigate = useNavigate();
+  const { user, logout, loading } = useUser();
 
-  const handleLogout = () => {
-    alert("Logout Successfully");
-    navigate("/");
-  };
-
-  return (
+  return user ? (
     <>
       <Link
         to="/profile"
@@ -115,8 +111,11 @@ function TopMenuItems() {
         Profile
       </Link>
       <p className="text-sm font-semibold leading-6 text-gray-900 block">
-        <button onClick={handleLogout}>Logout</button>
+        <button onClick={logout}>{loading ? "loading..." : "Logout"}</button>
       </p>
+    </>
+  ) : (
+    <>
       <Link
         to="/login"
         className="text-sm font-semibold leading-6 text-gray-900 block"

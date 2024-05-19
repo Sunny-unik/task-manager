@@ -1,8 +1,26 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../UserContext";
+import { useEffect } from "react";
+import FullPageLoader from "./FullPageLoading";
 
 export default function Login() {
+  const { user, loading, login } = useUser();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    user && navigate("/");
+  }, [user, navigate]);
+
+  const handleLogin = ({ nativeEvent, target }) => {
+    nativeEvent.preventDefault();
+    const [email, password] = new FormData(target).values();
+    login(email, password);
+  };
+
   return (
     <>
+      {loading && <FullPageLoader />}
+
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -16,7 +34,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleLogin}>
             <div>
               <label
                 htmlFor="email"
