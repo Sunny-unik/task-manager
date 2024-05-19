@@ -18,40 +18,6 @@ Before contributing, please read the [code of conduct](./code-of-conduct.md) and
 3. Always review your code first. Be sure to run the project locally and test before asking for a review.
 4. Always communicate in the GitHub repository. Whether it is in the issue or the pull request, keeping the lines of communication open and visible to everyone on the team helps everyone around you.
 
-### Applying Lint Styleguide [TODO: update linting instructions according your project]
-
-#### To check the code for linting errors, run the following command
-
-```shell
-npm run lint
-```
-
-To fix the linting errors, run the following command:
-
-```shell
-npm run lint:fix
-```
-
-These commands use [ESLint](https://eslint.org/) to check and fix the code.
-
-#### To check the code for formatting errors, run the following command
-
-```shell
-npm run prettier
-```
-
-To fix the formatting errors, run the following command:
-
-```shell
-npm run prettier:fix
-```
-
-These commands use [Prettier](https://prettier.io/) to check and fix the code.
-
-Linting and formatting errors will also be displayed during development, but won't prevent the code from compiling.
-
-If you forget to run this command, automated pre-commit checks will also run these commands, but the commit will be blocked if there are any errors.
-
 ## Pull requests
 
 **_We actively welcome your pull requests, however linking your work to an existing issue is preferred._**
@@ -79,4 +45,4 @@ See [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for m
 
 If you wish to work on an open issue, please get assign yourself to an issue before beginning work on it to avoid conflicts. For assign an issue to yourself comment on the issue `/attempt #issueNumber` to let us know that you want to work on this issue. Maintainer will check that issue is assigned to anyone else if not then maintainer assigned issue to you.
 
-In case you get stuck, please feel free to ask for help in the [Github Discussions](https://github.com/Sunny-unik/Template-repository/discussions/categories/q-a). [TODO: update discussion instructions as per your needs]
+In case you get stuck, please feel free to ask for help in the [Github Discussions](https://github.com/Sunny-unik/task-manager/discussions/categories/q-a).
