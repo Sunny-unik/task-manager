@@ -112,12 +112,7 @@ export default function AddTask() {
 
             <div>
               <label htmlFor="dueDate">Due date:</label>
-              <input
-                type="date"
-                id="dueDate"
-                name="dueDate"
-                value="2024-05-19"
-              />
+              <input type="date" id="dueDate" name="dueDate" />
             </div>
           </div>
           <br />
