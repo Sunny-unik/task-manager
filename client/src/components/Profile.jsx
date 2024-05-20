@@ -1,14 +1,7 @@
 import { useUser } from "../UserContext";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
-  const { user, loading } = useUser();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    !loading && !user && navigate("/");
-  }, [user, loading, navigate]);
+  const { user } = useUser();
 
   return (
     <div className="max-w-7xl mx-auto p-6">

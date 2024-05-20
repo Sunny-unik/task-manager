@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import AddTask from "./components/AddTask";
 import OpenTask from "./components/OpenTask";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 function App() {
   return (
@@ -18,13 +19,41 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" Component={Home} />
-            <Route path="/profile" Component={Profile} />
-            <Route path="/task/new" Component={AddTask} />
-            <Route path="/task/edit/:id" Component={AddTask} />
-            <Route path="/task/:id" Component={OpenTask} />
             <Route path="/login" Component={Login} />
-            <Route path="/register" Component={Register} />
             <Route path="/*" Component={NotFound} />
+            <Route path="/register" Component={Register} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoutes>
+                  <Profile />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/task/new"
+              element={
+                <ProtectedRoutes>
+                  <AddTask />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/task/edit/:id"
+              element={
+                <ProtectedRoutes>
+                  <AddTask />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/task/:id"
+              element={
+                <ProtectedRoutes>
+                  <OpenTask />
+                </ProtectedRoutes>
+              }
+            />
           </Routes>
         </UserProvider>
       </Router>
