@@ -20,7 +20,7 @@ const responseConstants = {
   update: (data, message, entity = "Entity", success) =>
     responseConstantStructure(
       data,
-      message ? message : entity + " created successfully",
+      message ? message : entity + " updated successfully",
       success
     ),
   delete: (data, message, entity, success) =>
