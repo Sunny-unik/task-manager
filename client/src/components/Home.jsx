@@ -28,6 +28,17 @@ export default function Home() {
     }
   };
 
+  const updateTasks = (data) => {
+    setTasks((current) => ({
+      data: [
+        ...current.data.map((t) =>
+          t._id === data._id ? { ...t, ...data } : t
+        ),
+      ],
+      loading: false,
+    }));
+  };
+
   return (
     <div className="max-w-7xl mx-auto">
       {!user ? (
@@ -85,7 +96,7 @@ export default function Home() {
                                 <TaskCard
                                   task={task}
                                   key={task._id}
-                                  fetchTasks={fetchTasks}
+                                  updateTasks={updateTasks}
                                 />
                               ))
                             ) : (
@@ -105,7 +116,7 @@ export default function Home() {
                                 <TaskCard
                                   task={task}
                                   key={task._id}
-                                  fetchTasks={fetchTasks}
+                                  updateTasks={updateTasks}
                                 />
                               ))
                             ) : (
@@ -125,7 +136,7 @@ export default function Home() {
                                 <TaskCard
                                   task={task}
                                   key={task._id}
-                                  fetchTasks={fetchTasks}
+                                  updateTasks={updateTasks}
                                 />
                               ))
                             ) : (

@@ -4,17 +4,18 @@ import { Link } from "react-router-dom";
 import getEnvs from "../helpers/getEnvs";
 import errorOrganizer from "../helpers/errorOrganizer";
 
-export default function TaskCard({ task, fetchTasks }) {
+export default function TaskCard({ task, updateTasks }) {
   const handlePriorityUpdate = async ({ target }) => {
     if (target.value === task.priority) return;
     try {
+      const updatedData = { ...task, priority: target.value };
       const { data } = await axios.put(
         getEnvs().serverUrl + "/task/" + task._id,
-        { ...task, priority: target.value },
+        updatedData,
         { withCredentials: true }
       );
       if (!data.success) throw new Error("Internal Server Error");
-      fetchTasks();
+      updateTasks(updatedData);
     } catch (error) {
       errorOrganizer(error);
     }
