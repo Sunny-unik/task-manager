@@ -16,7 +16,16 @@ export default function AddTask() {
   });
 
   useEffect(() => {
-    id && fetchTask();
+    id
+      ? fetchTask()
+      : task.title &&
+        setTask({
+          title: "",
+          priority: "",
+          status: "",
+          description: "",
+          dueDate: "",
+        });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -38,12 +47,18 @@ export default function AddTask() {
       const { data } = await (id ? axios.put : axios.post)(
         serverUrl + "/task/" + (id || ""),
         task,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       if (!data.success) throw new Error("Internal Server Error");
       alert(data.message);
+      !id &&
+        setTask({
+          title: "",
+          priority: "",
+          status: "",
+          description: "",
+          dueDate: "",
+        });
     } catch (error) {
       errorOrganizer(error);
     }
@@ -125,6 +140,7 @@ export default function AddTask() {
                   }
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
+                  <option value={""}>Select</option>
                   <option value={"low"}>Low</option>
                   <option value={"normal"}>Normal</option>
                   <option value={"high"}>High</option>
@@ -147,6 +163,7 @@ export default function AddTask() {
                   onChange={(e) => setTask({ ...task, status: e.target.value })}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
+                  <option value={""}>Select</option>
                   <option value={"pending"}>Pending</option>
                   <option value={"completed"}>Completed</option>
                   <option value={"dropped"}>Dropped</option>
@@ -159,7 +176,11 @@ export default function AddTask() {
               <input
                 type="date"
                 id="dueDate"
-                value={task.dueDate}
+                value={
+                  task.dueDate
+                    ? new Date(task.dueDate).toISOString().split("T")[0]
+                    : ""
+                }
                 onChange={(e) => setTask({ ...task, dueDate: e.target.value })}
                 name="dueDate"
               />

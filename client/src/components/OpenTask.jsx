@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { BsPencilSquare } from "react-icons/bs";
-import { Link, useParams } from "react-router-dom";
+import { MdDeleteForever } from "react-icons/md";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import getEnvs from "../helpers/getEnvs";
 import errorOrganizer from "../helpers/errorOrganizer";
 
 export default function OpenTask() {
   const { id } = useParams();
+  const { serverUrl } = getEnvs();
+  const navigate = useNavigate();
   const [task, setTask] = useState({ loading: true, data: null });
 
   useEffect(() => {
@@ -16,7 +19,7 @@ export default function OpenTask() {
 
   const fetchTask = async () => {
     try {
-      const { data } = await axios.get(getEnvs().serverUrl + "/task/" + id, {
+      const { data } = await axios.get(serverUrl + `/task/${id}`, {
         withCredentials: true,
       });
       if (!data.success) throw new Error("Internal Server Error");
@@ -27,16 +30,42 @@ export default function OpenTask() {
     }
   };
 
+  const handleDelete = async () => {
+    const confirmDelete = confirm(
+      "Do you want to delete this task permanently?"
+    );
+    if (!confirmDelete) return;
+    try {
+      const { data } = await axios.delete(serverUrl + `/task/${id}`, {
+        withCredentials: true,
+      });
+      if (!data.success) throw new Error("Internal Server Error");
+      navigate("/");
+    } catch (error) {
+      errorOrganizer(error);
+    }
+  };
+
   return (
     <div className="mx-auto max-w-7xl px-6">
-      <abbr title="Edit Task">
-        <Link
-          to={"/task/edit/" + id}
-          className="float-end w-max flex gap-2 items-center bg-transparent hover:bg-indigo-500 text-indigo-700 font-semibold hover:text-white py-2 px-4 border border-indigo-500 hover:border-transparent rounded"
-        >
-          <BsPencilSquare />
-        </Link>
-      </abbr>
+      <div className="float-end flex gap-1">
+        <abbr title="Delete Task">
+          <span
+            onClick={handleDelete}
+            className="cursor-pointer w-max flex bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded"
+          >
+            <MdDeleteForever />
+          </span>
+        </abbr>
+        <abbr title="Edit Task">
+          <Link
+            to={"/task/edit/" + id}
+            className="w-max flex bg-transparent hover:bg-indigo-500 text-indigo-700 font-semibold hover:text-white py-2 px-4 border border-indigo-500 hover:border-transparent rounded"
+          >
+            <BsPencilSquare />
+          </Link>
+        </abbr>
+      </div>
       <div className="px-4 sm:px-0">
         <h3 className="text-base font-semibold leading-7 text-gray-900">
           Task Information
