@@ -52,26 +52,101 @@ export default function Home() {
       ) : (
         <div className="bg-white">
           <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+            <h2 className="text-2xl mb-8 font-bold tracking-tight text-gray-900">
               All your tasks
             </h2>
-            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-              {!tasks.loading ? (
-                <>
-                  {tasks.data.length ? (
-                    tasks.data.map((task) => (
-                      <TaskCard task={task} key={task._id} />
-                    ))
-                  ) : (
-                    <div className="text-bold underline text-2xl">
-                      Not any task found
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="text-bold underline text-4xl">...loading</div>
-              )}
-            </div>
+            {!tasks.loading ? (
+              <>
+                {tasks.data.length ? (
+                  (() => {
+                    const highPriorityTasks = [];
+                    const normalPriorityTasks = [];
+                    const lowPriorityTasks = [];
+
+                    tasks.data.forEach((task) => {
+                      if (task.priority === "high") {
+                        highPriorityTasks.push(task);
+                      } else if (task.priority === "normal") {
+                        normalPriorityTasks.push(task);
+                      } else if (task.priority === "low") {
+                        lowPriorityTasks.push(task);
+                      }
+                    });
+
+                    return (
+                      <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                        <div>
+                          <h2 className="text-xl underline font-bold mb-4">
+                            High Priority
+                          </h2>
+                          <div className="space-y-4">
+                            {highPriorityTasks.length ? (
+                              highPriorityTasks.map((task) => (
+                                <TaskCard
+                                  task={task}
+                                  key={task._id}
+                                  fetchTasks={fetchTasks}
+                                />
+                              ))
+                            ) : (
+                              <div className="text-gray-500">
+                                No high priority tasks found.
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div>
+                          <h2 className="text-xl underline font-bold mb-4">
+                            Normal Priority
+                          </h2>
+                          <div className="space-y-4">
+                            {normalPriorityTasks.length ? (
+                              normalPriorityTasks.map((task) => (
+                                <TaskCard
+                                  task={task}
+                                  key={task._id}
+                                  fetchTasks={fetchTasks}
+                                />
+                              ))
+                            ) : (
+                              <div className="text-gray-500">
+                                No normal priority tasks found.
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <div>
+                          <h2 className="text-xl underline font-bold mb-4">
+                            Low Priority
+                          </h2>
+                          <div className="space-y-4">
+                            {lowPriorityTasks.length ? (
+                              lowPriorityTasks.map((task) => (
+                                <TaskCard
+                                  task={task}
+                                  key={task._id}
+                                  fetchTasks={fetchTasks}
+                                />
+                              ))
+                            ) : (
+                              <div className="text-gray-500">
+                                No low priority tasks found.
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })()
+                ) : (
+                  <div className="text-bold underline text-2xl">
+                    Not any task found
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-bold underline text-4xl">...loading</div>
+            )}
           </div>
         </div>
       )}
