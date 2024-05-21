@@ -86,11 +86,11 @@ export default function Home() {
 
                     return (
                       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                        <div>
+                        <div className="bg-red-500 rounded p-2">
                           <h2 className="text-xl underline font-bold mb-4">
                             High Priority
                           </h2>
-                          <div className="space-y-4">
+                          <div className="space-y-4 max-h-[36rem] overflow-y-auto">
                             {highPriorityTasks.length ? (
                               highPriorityTasks.map((task) => (
                                 <TaskCard
@@ -100,17 +100,17 @@ export default function Home() {
                                 />
                               ))
                             ) : (
-                              <div className="text-gray-500">
+                              <div className="bg-white text-gray-500 rounded py-2 border">
                                 No high priority tasks found.
                               </div>
                             )}
                           </div>
                         </div>
-                        <div>
+                        <div className="bg-blue-500 rounded p-2">
                           <h2 className="text-xl underline font-bold mb-4">
                             Normal Priority
                           </h2>
-                          <div className="space-y-4">
+                          <div className="space-y-4 max-h-[36rem] overflow-y-auto">
                             {normalPriorityTasks.length ? (
                               normalPriorityTasks.map((task) => (
                                 <TaskCard
@@ -120,17 +120,17 @@ export default function Home() {
                                 />
                               ))
                             ) : (
-                              <div className="text-gray-500">
+                              <div className="bg-white text-gray-500 rounded py-2 border">
                                 No normal priority tasks found.
                               </div>
                             )}
                           </div>
                         </div>
-                        <div>
+                        <div className="bg-green-500 rounded p-2">
                           <h2 className="text-xl underline font-bold mb-4">
                             Low Priority
                           </h2>
-                          <div className="space-y-4">
+                          <div className="space-y-4 max-h-[36rem] overflow-y-auto">
                             {lowPriorityTasks.length ? (
                               lowPriorityTasks.map((task) => (
                                 <TaskCard
@@ -140,7 +140,7 @@ export default function Home() {
                                 />
                               ))
                             ) : (
-                              <div className="text-gray-500">
+                              <div className="bg-white text-gray-500 rounded py-2 border">
                                 No low priority tasks found.
                               </div>
                             )}

@@ -22,7 +22,7 @@ export default function TaskCard({ task, updateTasks }) {
   };
 
   return (
-    <div className="border p-4 relative rounded mt-4 flex justify-between">
+    <div className="bg-white border p-4 relative rounded mt-4 flex justify-between">
       <div>
         <h3 className="text-sm text-gray-700">
           <Link to={"/task/" + task._id}>
